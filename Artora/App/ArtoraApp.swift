@@ -6,7 +6,7 @@ struct ArtoraApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            AcademyRoot()
                 .environmentObject(progress)
         }
     }
