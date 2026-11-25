@@ -2,6 +2,7 @@ import SwiftUI
 import PhotosUI
 import UIKit
 import Vision
+import CoreImage
 
 struct PhotoReviewView: View {
     @EnvironmentObject private var progress: ProgressStore
