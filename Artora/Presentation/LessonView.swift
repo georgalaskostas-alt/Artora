@@ -22,9 +22,7 @@ struct LessonView: View {
                 .tint(ArtoraTheme.accent)
 
             Spacer()
-            Image(systemName: lesson.systemImage)
-                .font(.system(size: 100, weight: .ultraLight))
-                .foregroundStyle(ArtoraTheme.accent)
+            SketchIllustration(lessonID: lesson.id, step: currentStep)
                 .frame(maxWidth: .infinity)
                 .frame(height: 230)
                 .background(ArtoraTheme.soft, in: RoundedRectangle(cornerRadius: 30))
