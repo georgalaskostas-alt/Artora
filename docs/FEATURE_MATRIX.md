@@ -16,6 +16,7 @@
 | Original incremental illustrations | P2 | Implemented, unverified | Four lessons |
 | Paper perspective correction | P3 | Prototype, unverified | Device image tests |
 | Onboarding and tab navigation | P1 | Implemented, unverified | UI tests |
-
 | Experimental image metrics | P4 | Implemented, unverified | Synthetic tests and photo QA |
 | Spoken instructions | P6 | Implemented, unverified | Device voice QA |
+
+| Reference comparison and difference map | P4 | Prototype, unverified | Synthetic tests and aligned photo QA |
