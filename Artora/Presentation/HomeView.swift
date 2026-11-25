@@ -106,8 +106,7 @@ private struct LessonCard: View {
 
     var body: some View {
         HStack(spacing: 15) {
-            Image(systemName: lesson.systemImage)
-                .font(.system(size: 27))
+            SketchIllustration(lessonID: lesson.id, step: lesson.steps.count - 1)
                 .frame(width: 72, height: 76)
                 .foregroundStyle(ArtoraTheme.accent)
                 .background(ArtoraTheme.soft, in: RoundedRectangle(cornerRadius: 17))
