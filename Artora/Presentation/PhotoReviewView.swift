@@ -26,6 +26,7 @@ struct PhotoReviewView: View {
                 if UIImagePickerController.isSourceTypeAvailable(.camera) {
                     Button { camera = true } label: { Label(greek ? "Κάμερα" : "Camera", systemImage:"camera") }.buttonStyle(.bordered)
                 }
+                if let image = corrected ?? photo { SketchFeedbackView(image: image, greek: greek).id(ObjectIdentifier(image)) }
                 if photo != nil {
                     Button(greek ? "Εντοπισμός χαρτιού" : "Detect paper") { detectPaper() }.buttonStyle(.bordered)
                     Button(greek ? "Αφαίρεση φωτογραφίας" : "Remove photo", role: .destructive) { photo = nil; corrected = nil; item = nil; message = "" }
