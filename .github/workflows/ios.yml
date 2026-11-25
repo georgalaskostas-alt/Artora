@@ -1,0 +1,23 @@
+name: iOS Build and Tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  build-test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build for iOS Simulator
+        run: xcodebuild -project Artora.xcodeproj -scheme Artora -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+      - name: Run Unit Tests
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available | grep -E 'iPhone 16 ' | head -1 | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/')
+          if [ -z "$DEVICE_ID" ]; then echo "No iPhone 16 simulator available"; exit 1; fi
+          xcodebuild test -project Artora.xcodeproj -scheme Artora -destination "platform=iOS Simulator,id=$DEVICE_ID" CODE_SIGNING_ALLOWED=NO
