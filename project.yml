@@ -3,7 +3,7 @@ options:
   bundleIdPrefix: com.artora
 settings:
   base:
-    SWIFT_VERSION: 5.9
+    SWIFT_VERSION: 5.0
 targets:
   Artora:
     type: application
@@ -17,6 +17,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         TARGETED_DEVICE_FAMILY: "1,2"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_NSCameraUsageDescription: Photograph your drawing for local paper detection.
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
     scheme:
