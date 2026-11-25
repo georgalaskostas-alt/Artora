@@ -6,6 +6,7 @@ struct LessonView: View {
     @EnvironmentObject private var progress: ProgressStore
     @Environment(\.dismiss) private var dismiss
     @State private var currentStep = 0
+    @StateObject private var narrator = LessonNarrator()
 
     private var language: LearningLanguage { progress.preferredLanguage }
 
@@ -38,6 +39,7 @@ struct LessonView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+            Button { narrator.speak(lesson.steps[currentStep].instruction(for: language), language: language) } label: { Label(language == .greek ? "Άκουσε την οδηγία" : "Listen to instruction", systemImage: "speaker.wave.2") }
             Spacer()
 
             HStack(spacing: 12) {
@@ -67,5 +69,7 @@ struct LessonView: View {
         .background(ArtoraTheme.paper.ignoresSafeArea())
         .navigationTitle(lesson.title(for: language))
         .navigationBarTitleDisplayMode(.inline)
+        .onDisappear { narrator.stop() }
+        .onChange(of: currentStep) { _, _ in narrator.stop() }
     }
 }
