@@ -17,3 +17,6 @@ AI comparison must report per-category outcomes on diverse human drawings, inclu
 
 ## CI
 Add xcodebuild validation on a macOS runner once project files are present. No passing build is claimed until CI completes successfully.
+
+## Reference comparison
+Test identical, disjoint, near-neighbor and blank masks. On device verify orientation, lighting, scale and position using real paper sketches. Do not interpret pixel coverage as drawing skill.
