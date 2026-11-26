@@ -26,3 +26,6 @@ Verify translated masks normalize identically; reject blank masks; exclude compl
 
 ## Gallery
 Verify persistence and deletion, empty input rejection, camera/studio saves, corrupted file handling, large collections and device backup behavior.
+
+## Illustrated catalog
+Verify one nonempty path per lesson step; manually check that each illustration matches both localized instructions.
