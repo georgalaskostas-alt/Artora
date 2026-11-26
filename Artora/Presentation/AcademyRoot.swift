@@ -9,6 +9,7 @@ struct AcademyRoot: View {
             HomeView().tabItem { Label(greek ? "Μαθήματα" : "Learn", systemImage:"book") }
             NavigationStack { StudioView() }.tabItem { Label(greek ? "Εργαστήριο" : "Studio", systemImage:"pencil.tip") }
             NavigationStack { PhotoReviewView() }.tabItem { Label(greek ? "Έλεγχος" : "Review", systemImage:"viewfinder") }
+            NavigationStack { GalleryView() }.tabItem { Label(greek ? "Συλλογή" : "Gallery", systemImage: "photo.on.rectangle") }
             NavigationStack {
                 List {
                     Section(greek ? "Πρόοδος" : "Progress") {
