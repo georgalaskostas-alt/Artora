@@ -19,6 +19,7 @@
 | Experimental image metrics | P4 | Implemented, unverified | Synthetic tests and photo QA |
 | Spoken instructions | P6 | Implemented, unverified | Device voice QA |
 | Reference comparison and difference map | P4 | Prototype, unverified | Synthetic tests and aligned photo QA |
-
 | Translation and uniform scale normalization | P4 | Prototype, unverified | Synthetic and real photo QA |
 | Next lesson recommendation | P6 | Implemented, unverified | Completion and preference tests |
+
+| Local artwork gallery | P6 | Implemented, unverified | Save, reopen, delete and device QA |
