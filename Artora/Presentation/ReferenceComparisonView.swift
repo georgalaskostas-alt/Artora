@@ -32,6 +32,7 @@ struct ReferenceComparisonView: View {
                 }.frame(height:210).background(.white,in:RoundedRectangle(cornerRadius:12))
                 Label(greek ? "Πορτοκαλί: γραμμές προτύπου χωρίς κοντινή αντιστοίχιση" : "Orange: unmatched reference lines",systemImage:"circle.fill").foregroundStyle(.orange)
                 Label(greek ? "Μπλε: γραμμές φωτογραφίας χωρίς κοντινή αντιστοίχιση" : "Blue: unmatched photo lines",systemImage:"circle.fill").foregroundStyle(.blue)
+                SketchCoachView(result: result, greek: greek)
                 Text((greek ? "Κάλυψη προτύπου: " : "Reference coverage: ") + result.referenceCoverage.formatted(.percent.precision(.fractionLength(0))))
             }
             Text(message).font(.caption)
