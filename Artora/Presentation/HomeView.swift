@@ -44,6 +44,12 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(ArtoraTheme.soft, in: RoundedRectangle(cornerRadius: 26))
 
+                    if let next = LearningPath.next(in: LessonCatalog.lessons, completed: progress.completedIDs, preferred: selectedCategory) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(language == .greek ? "Επόμενο για εσένα" : "Next for you").font(.headline)
+                            NavigationLink(value: next) { LessonCard(lesson: next, language: language, complete: false) }.buttonStyle(.plain)
+                        }
+                    }
                     HStack {
                         Text(language == .greek ? "Ανακάλυψε" : "Explore")
                             .font(.title2.bold())
