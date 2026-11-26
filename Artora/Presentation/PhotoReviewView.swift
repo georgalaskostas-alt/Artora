@@ -6,6 +6,7 @@ import CoreImage
 
 struct PhotoReviewView: View {
     @EnvironmentObject private var progress: ProgressStore
+    @EnvironmentObject private var gallery: GalleryStore
     @State private var item: PhotosPickerItem?
     @State private var photo: UIImage?
     @State private var corrected: UIImage?
@@ -27,6 +28,15 @@ struct PhotoReviewView: View {
                     Button { camera = true } label: { Label(greek ? "Κάμερα" : "Camera", systemImage:"camera") }.buttonStyle(.bordered)
                 }
                 if let image = corrected ?? photo { SketchFeedbackView(image: image, greek: greek).id(ObjectIdentifier(image)); ReferenceComparisonView(image: image, greek: greek).id(ObjectIdentifier(image)) }
+                if let image = corrected ?? photo {
+                    Button(greek ? "Αποθήκευση στη συλλογή" : "Save to gallery") {
+                        do {
+                            guard let data = image.jpegData(compressionQuality: 0.8) else { throw CocoaError(.fileWriteUnknown) }
+                            try gallery.add(title: greek ? "Σχέδιο σε χαρτί" : "Paper drawing", jpeg: data)
+                            message = greek ? "Αποθηκεύτηκε" : "Saved"
+                        } catch { message = greek ? "Αποτυχία αποθήκευσης" : "Save failed" }
+                    }.buttonStyle(.bordered)
+                }
                 if photo != nil {
                     Button(greek ? "Εντοπισμός χαρτιού" : "Detect paper") { detectPaper() }.buttonStyle(.bordered)
                     Button(greek ? "Αφαίρεση φωτογραφίας" : "Remove photo", role: .destructive) { photo = nil; corrected = nil; item = nil; message = "" }
