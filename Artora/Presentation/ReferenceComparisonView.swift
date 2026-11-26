@@ -17,7 +17,7 @@ struct ReferenceComparisonView: View {
                 ForEach(LessonCatalog.lessons) { item in Text(item.title(for:greek ? .greek : .english)).tag(item.id) }
             }
             SketchIllustration(lessonID:lessonID,step:lesson.steps.count-1).frame(height:150).background(.white,in:RoundedRectangle(cornerRadius:12))
-            Text(greek ? "Χρησιμοποίησε καθαρή, κάθετη φωτογραφία με το σχέδιο στην ίδια θέση και κλίμακα με το πρότυπο." : "Use a clear overhead photo with your sketch at the same position and scale as the reference.").font(.caption)
+            Text(greek ? "Χρησιμοποίησε καθαρή, κάθετη φωτογραφία με το σχέδιο με το χαρτί χωρίς σκιές και περιστροφή." : "Use a clear overhead photo with your sketch without shadows or rotation.").font(.caption)
             Button(greek ? "Σύγκριση" : "Compare") { compare() }.buttonStyle(.borderedProminent)
             if let result {
                 Canvas { context,size in
@@ -35,7 +35,7 @@ struct ReferenceComparisonView: View {
                 Text((greek ? "Κάλυψη προτύπου: " : "Reference coverage: ") + result.referenceCoverage.formatted(.percent.precision(.fractionLength(0))))
             }
             Text(message).font(.caption)
-            Text(greek ? "Πειραματική σύγκριση pixels χωρίς αυτόματη ευθυγράμμιση. Δεν αποτελεί βαθμολογία ή AI αξιολόγηση." : "Experimental pixel comparison without automatic alignment. Not a grade or AI assessment.").font(.caption).foregroundStyle(.secondary)
+            Text(greek ? "Πειραματική σύγκριση pixels με κανονικοποίηση θέσης και κλίμακας, όχι περιστροφής. Δεν αποτελεί βαθμολογία ή AI αξιολόγηση." : "Experimental pixel comparison with position and scale normalization, not rotation. Not a grade or AI assessment.").font(.caption).foregroundStyle(.secondary)
         }.padding().background(.thinMaterial,in:RoundedRectangle(cornerRadius:18))
         .onChange(of:lessonID) { _,_ in result = nil; message = "" }
     }
@@ -47,7 +47,8 @@ struct ReferenceComparisonView: View {
         guard let reference = renderer.uiImage,
               let a = mask(reference), let b = mask(image),
               b.count > 12, b.count < side*side/2,
-              let comparison = SketchComparison.compare(reference:a,drawing:b) else {
+              let alignedA = SketchAlignment.normalize(a), let alignedB = SketchAlignment.normalize(b),
+              let comparison = SketchComparison.compare(reference:alignedA,drawing:alignedB) else {
             message = greek ? "Δεν βρέθηκε κατάλληλο σχέδιο. Δοκίμασε καλύτερο φωτισμό." : "No suitable sketch detected. Try better lighting."
             return
         }
