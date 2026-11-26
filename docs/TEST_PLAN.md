@@ -29,3 +29,6 @@ Verify persistence and deletion, empty input rejection, camera/studio saves, cor
 
 ## Illustrated catalog
 Verify one nonempty path per lesson step; manually check that each illustration matches both localized instructions.
+
+## Coaching
+Test low, mixed, high and invalid correspondence. Human review must check that advice is helpful, nonjudgmental and robust to photographic artifacts before release.
