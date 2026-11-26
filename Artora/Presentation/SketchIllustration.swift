@@ -40,7 +40,7 @@ struct SketchIllustration: View {
                 Path { p in p.move(to: CGPoint(x:85,y:125)); p.addLine(to: CGPoint(x:35,y:115)); p.move(to: CGPoint(x:155,y:125)); p.addLine(to: CGPoint(x:205,y:115)); p.move(to: CGPoint(x:90,y:138)); p.addQuadCurve(to: CGPoint(x:150,y:138),control: CGPoint(x:120,y:300)) }]
         case "coffee-cup":
             return [oval(45,55,130,42), Path { p in p.move(to:CGPoint(x:45,y:76)); p.addLine(to:CGPoint(x:65,y:165)); p.move(to:CGPoint(x:175,y:76)); p.addLine(to:CGPoint(x:155,y:165)) }, Path { p in p.move(to:CGPoint(x:65,y:165)); p.addQuadCurve(to:CGPoint(x:155,y:165),control:CGPoint(x:110,y:195)); p.move(to:CGPoint(x:170,y:95)); p.addQuadCurve(to:CGPoint(x:160,y:145),control:CGPoint(x:240,y:120)) }]
-        default: return []
+        default: return ExtraIllustrations.paths(for: id)
         }
     }
 }
