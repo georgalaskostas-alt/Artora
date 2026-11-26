@@ -3,6 +3,7 @@ import PencilKit
 
 struct StudioView: View {
     @EnvironmentObject private var progress: ProgressStore
+    @EnvironmentObject private var gallery: GalleryStore
     @State private var canvas = PKCanvasView()
     @State private var color: Color = .black
     @State private var width = 4.0
@@ -24,6 +25,22 @@ struct StudioView: View {
             StudioCanvas(canvas: canvas, color: color, width: width, eraser: eraser)
                 .clipShape(RoundedRectangle(cornerRadius: 18))
             Button(greek ? "Αποθήκευση" : "Save drawing") { save() }.buttonStyle(.borderedProminent)
+            Button(greek ? "Προσθήκη στη συλλογή" : "Add to gallery") {
+                guard !canvas.drawing.strokes.isEmpty else { return }
+                let bounds = canvas.drawing.bounds.insetBy(dx: -12, dy: -12)
+                guard bounds.width > 0, bounds.height > 0 else { return }
+                let scale = min(1, 1200 / max(bounds.width, bounds.height))
+                let image = canvas.drawing.image(from: bounds, scale: scale)
+                let format = UIGraphicsImageRendererFormat(); format.opaque = true; format.scale = 1
+                let flattened = UIGraphicsImageRenderer(size: image.size, format: format).image { ctx in
+                    UIColor.white.setFill(); ctx.fill(CGRect(origin: .zero, size: image.size)); image.draw(at: .zero)
+                }
+                do {
+                    guard let data = flattened.jpegData(compressionQuality: 0.85) else { throw CocoaError(.fileWriteUnknown) }
+                    try gallery.add(title: greek ? "Ψηφιακό σχέδιο" : "Digital drawing", jpeg: data)
+                    status = greek ? "Αποθηκεύτηκε στη συλλογή" : "Saved to gallery"
+                } catch { status = greek ? "Αποτυχία αποθήκευσης" : "Save failed" }
+            }.buttonStyle(.bordered)
             Text(status).font(.caption)
         }
         .padding()
