@@ -88,5 +88,5 @@ enum LessonCatalog {
                 LessonStep(id: "cup-2", instructionEN: "Drop two sides from the oval.", instructionEL: "Κατέβασε δύο πλευρές από την έλλειψη."),
                 LessonStep(id: "cup-3", instructionEN: "Connect the bottom with a soft curve and add a handle.", instructionEL: "Ένωσε τη βάση με μια απαλή καμπύλη και πρόσθεσε χερούλι.")
             ])
-    ]
+    ] + ExtraLessons.lessons
 }
