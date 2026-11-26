@@ -20,3 +20,6 @@ Add xcodebuild validation on a macOS runner once project files are present. No p
 
 ## Reference comparison
 Test identical, disjoint, near-neighbor and blank masks. On device verify orientation, lighting, scale and position using real paper sketches. Do not interpret pixel coverage as drawing skill.
+
+## Alignment and recommendations
+Verify translated masks normalize identically; reject blank masks; exclude completed lessons. Additional device validation: scale, aspect ratio, stray marks, shadows, rotation, and lesson recommendation navigation.
