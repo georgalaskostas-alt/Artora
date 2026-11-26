@@ -23,3 +23,6 @@ Test identical, disjoint, near-neighbor and blank masks. On device verify orient
 
 ## Alignment and recommendations
 Verify translated masks normalize identically; reject blank masks; exclude completed lessons. Additional device validation: scale, aspect ratio, stray marks, shadows, rotation, and lesson recommendation navigation.
+
+## Gallery
+Verify persistence and deletion, empty input rejection, camera/studio saves, corrupted file handling, large collections and device backup behavior.
