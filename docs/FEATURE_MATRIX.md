@@ -24,5 +24,6 @@
 | Local artwork gallery | P6 | Implemented, unverified | Save, reopen, delete and device QA |
 | Rule-based drawing coach | P4 | Prototype, unverified | Advice rules and human review |
 | Photo lesson generator | P7 | Prototype, unverified | Progressive edges and photo QA |
-
 | Foreground isolation | P7 | Prototype, unverified | Device Vision mask and fallback QA |
+
+| Geometric construction guides | P7 | Prototype, unverified | Bounds tests and visual QA |
