@@ -7,6 +7,8 @@ struct PhotoLessonView: View {
     @State private var stages: [UIImage] = []
     @State private var step = 0
     @State private var failed = false
+    @State private var isolateSubject = true
+    @State private var isolated = false
     @StateObject private var narrator = LessonNarrator()
     private var instructions: [String] {
         greek ? ["Σχεδίασε πρώτα τις πιο έντονες γραμμές. Αγνόησε τις μικρές λεπτομέρειες.", "Πρόσθεσε τις νέες γραμμές και σύγκρινε τις αποστάσεις.", "Πρόσθεσε μόνο τις λεπτομέρειες που βοηθούν το σχέδιό σου."] : ["Start with the strongest lines. Ignore small details.", "Add the new lines and compare distances.", "Add only the details that help your drawing."]
@@ -14,6 +16,10 @@ struct PhotoLessonView: View {
     var body: some View {
         VStack(spacing: 16) {
             Text(greek ? "Μάθημα από φωτογραφία" : "Photo lesson").font(.title2.bold())
+            Toggle(greek ? "Απομόνωση αντικειμένου" : "Isolate subject", isOn: $isolateSubject)
+            if isolateSubject && !stages.isEmpty {
+                Text(isolated ? (greek ? "Εφαρμόστηκε μάσκα προσκηνίου" : "Foreground mask applied") : (greek ? "Δεν εντοπίστηκε προσκήνιο. Χρησιμοποιείται η αρχική εικόνα." : "No foreground mask available. Using original image.")).font(.caption)
+            }
             if stages.indices.contains(step) {
                 Text("\(step+1) / \(stages.count)").font(.caption)
                 Image(uiImage: stages[step]).resizable().interpolation(.none).scaledToFit().frame(maxHeight: 350).background(.white)
@@ -27,10 +33,11 @@ struct PhotoLessonView: View {
             } else if failed {
                 Text(greek ? "Δοκίμασε φωτογραφία με καθαρό αντικείμενο και μεγαλύτερη αντίθεση." : "Try a photo with a clear subject and stronger contrast.")
             } else { ProgressView() }
-            Text(greek ? "Πειραματική ανίχνευση ακμών, όχι αναγνώριση αντικειμένου. Το φόντο μπορεί να εμφανίζεται στα στάδια." : "Experimental edge detection, not object recognition. Background edges may appear.").font(.caption).foregroundStyle(.secondary)
-        }.padding().task { generate() }.onDisappear { narrator.stop() }.onChange(of: step) { _,_ in narrator.stop() }
+            Text(greek ? "Πειραματική απομόνωση προσκηνίου και ανίχνευση ακμών. Η μάσκα μπορεί να είναι ατελής." : "Experimental foreground isolation and edge detection. The mask may be imperfect.").font(.caption).foregroundStyle(.secondary)
+        }.padding().task(id: isolateSubject) { generate() }.onDisappear { narrator.stop() }.onChange(of: step) { _,_ in narrator.stop() }
     }
     private func generate() {
+        narrator.stop(); stages = []; step = 0; failed = false; isolated = false
         let n = 256, s = CGFloat(n)
         guard image.size.width > 0, image.size.height > 0 else { failed = true; return }
         let format = UIGraphicsImageRendererFormat(); format.scale = 1; format.opaque = true
@@ -40,7 +47,11 @@ struct PhotoLessonView: View {
             let w = image.size.width*scale, h = image.size.height*scale
             image.draw(in:CGRect(x:(s-w)/2,y:(s-h)/2,width:w,height:h))
         }
-        guard let cg = normalized.cgImage else { failed = true; return }
+        guard let original = normalized.cgImage else { failed = true; return }
+        var cg = original
+        if isolateSubject, let foreground = try? ForegroundIsolation.isolate(original) {
+            cg = foreground; isolated = true
+        }
         var pixels = [UInt8](repeating:255,count:n*n)
         let ok = pixels.withUnsafeMutableBytes { b -> Bool in
             guard let c = CGContext(data:b.baseAddress,width:n,height:n,bitsPerComponent:8,bytesPerRow:n,space:CGColorSpaceCreateDeviceGray(),bitmapInfo:CGImageAlphaInfo.none.rawValue) else { return false }
