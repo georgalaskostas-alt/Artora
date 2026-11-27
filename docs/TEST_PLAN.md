@@ -35,3 +35,6 @@ Test low, mixed, high and invalid correspondence. Human review must check that a
 
 ## Photo lessons
 Verify blank rejection, invalid dimensions, cumulative edge masks, image orientation and navigation. Review real photographs for background clutter and pedagogical usefulness.
+
+## Foreground isolation
+On iOS 17+ test single/multiple subjects, white objects, no subject, mask errors, toggle regeneration and original-image fallback. Compare edge clutter before and after masking.
