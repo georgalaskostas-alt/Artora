@@ -38,3 +38,6 @@ Verify blank rejection, invalid dimensions, cumulative edge masks, image orienta
 
 ## Foreground isolation
 On iOS 17+ test single/multiple subjects, white objects, no subject, mask errors, toggle regeneration and original-image fallback. Compare edge clutter before and after masking.
+
+## Geometry guides
+Test blank and malformed input, bounding box placement and four-stage navigation. Verify guide orientation and sensitivity to stray edges on device.
