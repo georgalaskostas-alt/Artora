@@ -17,3 +17,27 @@ AI comparison must report per-category outcomes on diverse human drawings, inclu
 
 ## CI
 Add xcodebuild validation on a macOS runner once project files are present. No passing build is claimed until CI completes successfully.
+
+## Reference comparison
+Test identical, disjoint, near-neighbor and blank masks. On device verify orientation, lighting, scale and position using real paper sketches. Do not interpret pixel coverage as drawing skill.
+
+## Alignment and recommendations
+Verify translated masks normalize identically; reject blank masks; exclude completed lessons. Additional device validation: scale, aspect ratio, stray marks, shadows, rotation, and lesson recommendation navigation.
+
+## Gallery
+Verify persistence and deletion, empty input rejection, camera/studio saves, corrupted file handling, large collections and device backup behavior.
+
+## Illustrated catalog
+Verify one nonempty path per lesson step; manually check that each illustration matches both localized instructions.
+
+## Coaching
+Test low, mixed, high and invalid correspondence. Human review must check that advice is helpful, nonjudgmental and robust to photographic artifacts before release.
+
+## Photo lessons
+Verify blank rejection, invalid dimensions, cumulative edge masks, image orientation and navigation. Review real photographs for background clutter and pedagogical usefulness.
+
+## Foreground isolation
+On iOS 17+ test single/multiple subjects, white objects, no subject, mask errors, toggle regeneration and original-image fallback. Compare edge clutter before and after masking.
+
+## Geometry guides
+Test blank and malformed input, bounding box placement and four-stage navigation. Verify guide orientation and sensitivity to stray edges on device.
