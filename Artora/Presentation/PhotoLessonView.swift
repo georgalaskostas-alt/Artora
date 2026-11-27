@@ -11,7 +11,7 @@ struct PhotoLessonView: View {
     @State private var isolated = false
     @StateObject private var narrator = LessonNarrator()
     private var instructions: [String] {
-        greek ? ["Σχεδίασε πρώτα τις πιο έντονες γραμμές. Αγνόησε τις μικρές λεπτομέρειες.", "Πρόσθεσε τις νέες γραμμές και σύγκρινε τις αποστάσεις.", "Πρόσθεσε μόνο τις λεπτομέρειες που βοηθούν το σχέδιό σου."] : ["Start with the strongest lines. Ignore small details.", "Add the new lines and compare distances.", "Add only the details that help your drawing."]
+        greek ? ["Σχεδίασε απαλά το βοηθητικό πλαίσιο και τις κεντρικές γραμμές. Δεν είναι απαραίτητα άξονες συμμετρίας.", "Σχεδίασε πρώτα τις πιο έντονες γραμμές. Αγνόησε τις μικρές λεπτομέρειες.", "Πρόσθεσε τις νέες γραμμές και σύγκρινε τις αποστάσεις.", "Πρόσθεσε μόνο τις λεπτομέρειες που βοηθούν το σχέδιό σου."] : ["Lightly draw the bounding box and center guides. These are not necessarily symmetry axes.", "Start with the strongest lines. Ignore small details.", "Add the new lines and compare distances.", "Add only the details that help your drawing."]
     }
     var body: some View {
         VStack(spacing: 16) {
@@ -58,11 +58,12 @@ struct PhotoLessonView: View {
             c.draw(cg,in:CGRect(x:0,y:0,width:s,height:s)); return true
         }
         guard ok, let masks = PhotoLessonEdges.stages(pixels,width:n,height:n) else { failed = true; return }
-        stages = masks.compactMap { mask in
+        guard let last = masks.last, let guide = GeometryGuide.constructionMask(last, width: n, height: n) else { failed = true; return }
+        stages = ([guide] + masks).compactMap { mask in
             guard let provider = CGDataProvider(data:Data(mask) as CFData),
                   let cg = CGImage(width:n,height:n,bitsPerComponent:8,bitsPerPixel:8,bytesPerRow:n,space:CGColorSpaceCreateDeviceGray(),bitmapInfo:CGBitmapInfo(rawValue:CGImageAlphaInfo.none.rawValue),provider:provider,decode:nil,shouldInterpolate:false,intent:.defaultIntent) else { return nil }
             return UIImage(cgImage:cg)
         }
-        if stages.count != 3 { stages = []; failed = true }
+        if stages.count != 4 { stages = []; failed = true }
     }
 }
