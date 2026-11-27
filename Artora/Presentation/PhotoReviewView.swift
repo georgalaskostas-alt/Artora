@@ -37,6 +37,9 @@ struct PhotoReviewView: View {
                         } catch { message = greek ? "Αποτυχία αποθήκευσης" : "Save failed" }
                     }.buttonStyle(.bordered)
                 }
+                if let original = photo {
+                    NavigationLink { ScrollView { PhotoLessonView(image: original, greek: greek) } } label: { Label(greek ? "Δημιουργία μαθήματος" : "Create lesson", systemImage: "wand.and.stars") }.buttonStyle(.borderedProminent)
+                }
                 if photo != nil {
                     Button(greek ? "Εντοπισμός χαρτιού" : "Detect paper") { detectPaper() }.buttonStyle(.bordered)
                     Button(greek ? "Αφαίρεση φωτογραφίας" : "Remove photo", role: .destructive) { photo = nil; corrected = nil; item = nil; message = "" }
