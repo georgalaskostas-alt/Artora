@@ -32,3 +32,6 @@ Verify one nonempty path per lesson step; manually check that each illustration 
 
 ## Coaching
 Test low, mixed, high and invalid correspondence. Human review must check that advice is helpful, nonjudgmental and robust to photographic artifacts before release.
+
+## Photo lessons
+Verify blank rejection, invalid dimensions, cumulative edge masks, image orientation and navigation. Review real photographs for background clutter and pedagogical usefulness.
